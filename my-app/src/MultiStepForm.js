@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import './styles.css'; 
-
+import './styles.css';
 
 const MultiStepForm = () => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    dob: '',
-    streetAddress: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    username: '',
-    password: '',
-  });
-
   const [step, setStep] = useState(1);
 
   const nextStep = () => {
@@ -31,43 +18,42 @@ const MultiStepForm = () => {
     fullName: step === 1
       ? Yup.string().matches(/^[a-zA-Z]+ [a-zA-Z]+$/, 'Full Name should contain first name and last name').required('Full Name is required')
       : Yup.string(),
-  
+
     email: step === 1
       ? Yup.string().email('Invalid email format').required('Email is required')
       : Yup.string(),
-  
+
     dob: step === 1
       ? Yup.date()
-          .max(new Date(), 'Date of Birth cannot be in the future')
-          .min(new Date(new Date().setFullYear(new Date().getFullYear() - 150)), 'Date of Birth cannot be older than 150 years')
-          .required('Date of Birth is required')
+        .max(new Date(), 'Date of Birth cannot be in the future')
+        .min(new Date(new Date().setFullYear(new Date().getFullYear() - 150)), 'Date of Birth cannot be older than 150 years')
+        .required('Date of Birth is required')
       : Yup.date(),
-  
+
     streetAddress: step === 2
       ? Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9\s,.'-]+$/, 'Invalid Street Address').required('Street Address is required')
-      : Yup.string(),    
-  
+      : Yup.string(),
+
     city: step === 2
       ? Yup.string().matches(/^[a-zA-Z\s]+$/, 'City must only contain letters').required('City must not contain number')
       : Yup.string(),
-    
+
     state: step === 2
       ? Yup.string().matches(/^[a-zA-Z\s]+$/, 'State must only contain letters').required('State must not contain number')
       : Yup.string(),
-  
+
     zipCode: step === 2
       ? Yup.string().matches(/^\d{5}$/, 'Invalid Zip Code').required('Zip Code is required')
       : Yup.string(),
-  
+
     username: step === 3
       ? Yup.string().required('Username is required').min(8, 'Username must be at least 8 characters')
       : Yup.string(),
-  
+
     password: step === 3
       ? Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
       : Yup.string(),
   });
-  
 
   const handleSubmit = (values, { setSubmitting }) => {
     // Handle form submission logic here
@@ -86,7 +72,17 @@ const MultiStepForm = () => {
 
   return (
     <Formik
-      initialValues={formData}
+      initialValues={{
+        fullName: '',
+        email: '',
+        dob: '',
+        streetAddress: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        username: '',
+        password: '',
+      }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
