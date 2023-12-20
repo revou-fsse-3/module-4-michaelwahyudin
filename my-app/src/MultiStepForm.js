@@ -26,16 +26,43 @@ const MultiStepForm = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    fullName: step === 1 ? Yup.string().required('Full Name is required') : Yup.string(),
-    email: step === 1 ? Yup.string().email('Invalid email format').required('Email is required') : Yup.string(),
-    dob: step === 1 ? Yup.date().required('Date of Birth is required') : Yup.date(),
-    streetAddress: step === 2 ? Yup.string().required('Street Address is required') : Yup.string(),
-    city: step === 2 ? Yup.string().required('City is required') : Yup.string(),
-    state: step === 2 ? Yup.string().required('State is required') : Yup.string(),
-    zipCode: step === 2 ? Yup.string().matches(/^\d{5}$/, 'Invalid Zip Code').required('Zip Code is required') : Yup.string(),
-    username: step === 3 ? Yup.string().required('Username is required') : Yup.string(),
-    password: step === 3 ? Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters') : Yup.string(),
+    fullName: step === 1
+      ? Yup.string().matches(/^[a-zA-Z]+ [a-zA-Z]+$/, 'Full Name should contain first name and last name').required('Full Name is required')
+      : Yup.string(),
+  
+    email: step === 1
+      ? Yup.string().email('Invalid email format').required('Email is required')
+      : Yup.string(),
+  
+    dob: step === 1
+      ? Yup.date().required('Date of Birth is required')
+      : Yup.date(),
+  
+      streetAddress: step === 2
+      ? Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9\s,.'-]+$/, 'Invalid Street Address').required('Street Address is required')
+      : Yup.string(),    
+  
+    city: step === 2
+      ? Yup.string().required('City is required')
+      : Yup.string(),
+  
+    state: step === 2
+      ? Yup.string().required('State is required')
+      : Yup.string(),
+  
+    zipCode: step === 2
+      ? Yup.string().matches(/^\d{5}$/, 'Invalid Zip Code').required('Zip Code is required')
+      : Yup.string(),
+  
+    username: step === 3
+      ? Yup.string().required('Username is required').min(8, 'Username must be at least 8 characters')
+      : Yup.string(),
+  
+    password: step === 3
+      ? Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
+      : Yup.string(),
   });
+  
 
   const handleSubmit = (values, { setSubmitting }) => {
     // Handle form submission logic here
