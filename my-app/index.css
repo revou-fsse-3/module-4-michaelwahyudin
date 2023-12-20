@@ -1,4 +1,9 @@
-/* src/index.css */
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+
+body {
+  font-family: 'Helvetica', sans-serif;
+}
