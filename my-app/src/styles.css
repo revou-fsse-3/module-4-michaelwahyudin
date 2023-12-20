@@ -20,7 +20,6 @@ small {
   font-size: 80%;
 }
 
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -47,3 +46,16 @@ small {
 }
 
 
+.button-primary {
+  background-color: #3490dc;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+.button-secondary {
+  background-color: #6b7280;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}

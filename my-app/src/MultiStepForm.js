@@ -1,7 +1,8 @@
+// MultiStepForm.js
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import './styles.css';
+import './styles.css'; // Import your Tailwind CSS file
 
 const MultiStepForm = () => {
   const [step, setStep] = useState(1);
@@ -70,7 +71,7 @@ const MultiStepForm = () => {
     window.scrollTo(0, 0);
   }, [step]);
 
-  return (
+  return ( 
     <Formik
       initialValues={{
         fullName: '',
@@ -87,7 +88,7 @@ const MultiStepForm = () => {
       onSubmit={handleSubmit}
     >
       {(formikProps) => (
-        <Form className="max-w-md mx-auto mt-8 p-8 bg-gray-100 rounded">
+        <Form className="max-w-md mx-auto mt-8 p-8 bg-gray-100 rounded shadow-md">
           {step === 1 && (
             <>
               <h2 className="text-2xl font-semibold mb-4">Step 1: Personal Information</h2>
@@ -95,7 +96,7 @@ const MultiStepForm = () => {
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-600">
                   Full Name
                 </label>
-                <Field type="text" id="fullName" name="fullName" className="mt-1 p-2 w-full border rounded" />
+                <Field type="text" id="fullName" name="fullName" className="input-field" />
                 <ErrorMessage name="fullName" component="div" className="text-red-500 text-sm" />
               </div>
 
@@ -103,7 +104,7 @@ const MultiStepForm = () => {
                 <label htmlFor="email" className="block text-sm font-medium text-gray-600">
                   Email
                 </label>
-                <Field type="email" id="email" name="email" className="mt-1 p-2 w-full border rounded" />
+                <Field type="email" id="email" name="email" className="input-field" />
                 <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
               </div>
 
@@ -111,7 +112,7 @@ const MultiStepForm = () => {
                 <label htmlFor="dob" className="block text-sm font-medium text-gray-600">
                   Date of Birth
                 </label>
-                <Field type="date" id="dob" name="dob" className="mt-1 p-2 w-full border rounded" />
+                <Field type="date" id="dob" name="dob" className="input-field" />
                 <ErrorMessage name="dob" component="div" className="text-red-500 text-sm" />
               </div>
 
@@ -124,7 +125,7 @@ const MultiStepForm = () => {
                     }
                   });
                 }}
-                className="mt-4 bg-blue-500 text-white p-2 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 Next
               </button>
@@ -138,7 +139,7 @@ const MultiStepForm = () => {
                 <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-600">
                   Street Address
                 </label>
-                <Field type="text" id="streetAddress" name="streetAddress" className="mt-1 p-2 w-full border rounded" />
+                <Field type="text" id="streetAddress" name="streetAddress" className="input-field" />
                 <ErrorMessage name="streetAddress" component="div" className="text-red-500 text-sm" />
               </div>
 
@@ -146,7 +147,7 @@ const MultiStepForm = () => {
                 <label htmlFor="city" className="block text-sm font-medium text-gray-600">
                   City
                 </label>
-                <Field type="text" id="city" name="city" className="mt-1 p-2 w-full border rounded" />
+                <Field type="text" id="city" name="city" className="input-field" />
                 <ErrorMessage name="city" component="div" className="text-red-500 text-sm" />
               </div>
 
@@ -154,7 +155,7 @@ const MultiStepForm = () => {
                 <label htmlFor="state" className="block text-sm font-medium text-gray-600">
                   State
                 </label>
-                <Field type="text" id="state" name="state" className="mt-1 p-2 w-full border rounded" />
+                <Field type="text" id="state" name="state" className="input-field" />
                 <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
               </div>
 
@@ -162,24 +163,26 @@ const MultiStepForm = () => {
                 <label htmlFor="zipCode" className="block text-sm font-medium text-gray-600">
                   Zip Code
                 </label>
-                <Field type="text" id="zipCode" name="zipCode" className="mt-1 p-2 w-full border rounded" />
+                <Field type="text" id="zipCode" name="zipCode" className="input-field" />
                 <ErrorMessage name="zipCode" component="div" className="text-red-500 text-sm" />
               </div>
 
-              <button
-                type="submit"
-                disabled={!formikProps.isValid}
-                className="mt-4 bg-blue-500 text-white p-2 rounded"
-              >
-                Next
-              </button>
-              <button
-                type="button"
-                onClick={prevStep}
-                className="mt-4 ml-4 bg-gray-500 text-white p-2 rounded"
-              >
-                Previous
-              </button>
+              <div className="flex justify-between mt-8">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Previous
+                </button>
+                <button
+                  type="submit"
+                  disabled={!formikProps.isValid}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Next
+                </button>
+              </div>
             </>
           )}
 
@@ -190,7 +193,7 @@ const MultiStepForm = () => {
                 <label htmlFor="username" className="block text-sm font-medium text-gray-600">
                   Username
                 </label>
-                <Field type="text" id="username" name="username" className="mt-1 p-2 w-full border rounded" />
+                <Field type="text" id="username" name="username" className="input-field" />
                 <ErrorMessage name="username" component="div" className="text-red-500 text-sm" />
               </div>
 
@@ -198,24 +201,26 @@ const MultiStepForm = () => {
                 <label htmlFor="password" className="block text-sm font-medium text-gray-600">
                   Password
                 </label>
-                <Field type="password" id="password" name="password" className="mt-1 p-2 w-full border rounded" />
+                <Field type="password" id="password" name="password" className="input-field" />
                 <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
               </div>
 
-              <button
-                type="submit"
-                disabled={!formikProps.isValid}
-                className="mt-4 bg-blue-500 text-white p-2 rounded"
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                onClick={prevStep}
-                className="mt-4 ml-4 bg-gray-500 text-white p-2 rounded"
-              >
-                Previous
-              </button>
+              <div className="flex justify-between mt-8">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Previous
+                </button>
+                <button
+                  type="submit"
+                  disabled={!formikProps.isValid}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Submit
+                </button>
+              </div>
             </>
           )}
         </Form>
