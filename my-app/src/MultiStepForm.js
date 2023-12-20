@@ -34,20 +34,23 @@ const MultiStepForm = () => {
       ? Yup.string().email('Invalid email format').required('Email is required')
       : Yup.string(),
   
-    dob: step === 1
-      ? Yup.date().required('Date of Birth is required')
+      dob: step === 1
+      ? Yup.date()
+          .max(new Date(), 'Date of Birth cannot be in the future')
+          .min(new Date(new Date().setFullYear(new Date().getFullYear() - 150)), 'Date of Birth cannot be older than 150 years')
+          .required('Date of Birth is required')
       : Yup.date(),
   
       streetAddress: step === 2
       ? Yup.string().matches(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9\s,.'-]+$/, 'Invalid Street Address').required('Street Address is required')
       : Yup.string(),    
   
-    city: step === 2
-      ? Yup.string().required('City is required')
+      city: step === 2
+      ? Yup.string().matches(/^[a-zA-Z\s]+$/, 'City must only contain letters').required('City is required')
       : Yup.string(),
-  
+    
     state: step === 2
-      ? Yup.string().required('State is required')
+      ? Yup.string().matches(/^[a-zA-Z\s]+$/, 'State must only contain letters').required('State is required')
       : Yup.string(),
   
     zipCode: step === 2
