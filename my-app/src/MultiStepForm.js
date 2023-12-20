@@ -46,11 +46,11 @@ const MultiStepForm = () => {
       : Yup.string(),    
   
     city: step === 2
-      ? Yup.string().matches(/^[a-zA-Z\s]+$/, 'City must only contain letters').required('City is required')
+      ? Yup.string().matches(/^[a-zA-Z\s]+$/, 'City must only contain letters').required('City must not contain number')
       : Yup.string(),
     
     state: step === 2
-      ? Yup.string().matches(/^[a-zA-Z\s]+$/, 'State must only contain letters').required('State is required')
+      ? Yup.string().matches(/^[a-zA-Z\s]+$/, 'State must only contain letters').required('State must not contain number')
       : Yup.string(),
   
     zipCode: step === 2

@@ -1,3 +1,4 @@
+// craco.config.js
 const tailwindcss = require('tailwindcss');
 
 module.exports = {
