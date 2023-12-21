@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"  # Your build command
+  publish = "build"          # The directory to deploy
+
+[context.production.environment]
+  NODE_ENV = "production"    # Set environment variables for production
+
+[context.split1]
+  command = "npm run build"  # Another build command for a different context
+  publish = "split1"         # Publish directory for the split1 context
