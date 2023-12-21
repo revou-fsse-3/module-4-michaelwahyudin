@@ -1,5 +1,24 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/VXLqjAFn)
 
+This is my React project for revou
+
+In the project directory(use npm start on 'my-app' folder), you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+below is the video demo of my project 
+https://drive.google.com/file/d/10KYswcAQArMnu7uLY0uM9HifSbCJrX34/view?usp=sharing
+
+
+
+
+
+
+
+
 
 # Getting Started with Create React App
 
