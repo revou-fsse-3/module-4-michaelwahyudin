@@ -99,13 +99,31 @@ const MultiStepForm = () => {
       }
     }
 
-    // Increment the step after successful submission
+    if (step === 5) {
+      try {
+        // Fetch user profile after successful login or registration
+        const profileResponse = await fetch('https://mock-api.arikmpt.com/api/user/profile', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer YOUR_AUTH_TOKEN_HERE`,  // Replace with the actual token
+          },
+        });
+
+        if (!profileResponse.ok) {
+          console.error('Fetching user profile failed:', profileResponse.statusText);
+        } else {
+          const profileData = await profileResponse.json();
+          console.log('User Profile:', profileData);
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    }
+
     nextStep();
   };
 
   useEffect(() => {
-    // You can perform additional actions when the step changes
-    // For example, scroll to the top of the form
     window.scrollTo(0, 0);
   }, [step]);
 
@@ -255,7 +273,7 @@ const MultiStepForm = () => {
                   type="submit"
                   disabled={!formikProps.isValid}
                   onClick={() => handleSubmit(formikProps.values, formikProps)}
-                  className="bg-blue-500 hover.bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >
                   Register
                 </button>
@@ -305,8 +323,6 @@ const MultiStepForm = () => {
           {step === 5 && (
             <>
               <h2 className="text-2xl font-semibold mb-4">Step 5: User Information</h2>
-              {/* Display, edit, and save user information using the mock API */}
-              {/* Add your code here */}
               <div className="flex justify-between mt-8">
                 <button
                   type="button"
