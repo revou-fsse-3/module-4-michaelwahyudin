@@ -15,7 +15,16 @@ https://drive.google.com/file/d/10KYswcAQArMnu7uLY0uM9HifSbCJrX34/view?usp=shari
 
 
 
+# REQUIREMENTS
 
+- using useState
+- form validation using (yup/zod)
+- responsive web using Tailwind CSS
+- multi-step form using (Formik/react-hook-form)
+
+- using useEffect, custom hooks, and useContext correctly
+- routing (register, login, home (list category), edit, new) using react-router
+- CRUD (create, read, update, delete) category
 
 
 

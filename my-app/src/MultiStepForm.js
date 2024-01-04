@@ -63,15 +63,15 @@ const MultiStepForm = () => {
 
     if (step === 3) {
       try {
-        // API call for registration
-        const response = await fetch('https://mock-api.arikmpt.com/api/user/register', {
+        // API call for registration using JSONPlaceholder
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(values),
         });
-
+    
         if (!response.ok) {
           console.error('Registration failed:', response.statusText);
         }
@@ -79,18 +79,18 @@ const MultiStepForm = () => {
         console.error('Error during registration:', error);
       }
     }
-
+    
     if (step === 4) {
       try {
-        // API call for login
-        const response = await fetch('https://mock-api.arikmpt.com/api/user/login', {
+        // API call for login using JSONPlaceholder
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(values),
         });
-
+    
         if (!response.ok) {
           console.error('Login failed:', response.statusText);
         }
@@ -98,17 +98,14 @@ const MultiStepForm = () => {
         console.error('Error during login:', error);
       }
     }
-
+    
     if (step === 5) {
       try {
-        // Fetch user profile after successful login or registration
-        const profileResponse = await fetch('https://mock-api.arikmpt.com/api/user/profile', {
+        // Fetch user profile using JSONPlaceholder
+        const profileResponse = await fetch('https://jsonplaceholder.typicode.com/users/1', {
           method: 'GET',
-          headers: {
-            Authorization: `Bearer YOUR_AUTH_TOKEN_HERE`,  // Replace with the actual token
-          },
         });
-
+    
         if (!profileResponse.ok) {
           console.error('Fetching user profile failed:', profileResponse.statusText);
         } else {
@@ -119,6 +116,7 @@ const MultiStepForm = () => {
         console.error('Error fetching user profile:', error);
       }
     }
+    
 
     nextStep();
   };
