@@ -56,10 +56,48 @@ const MultiStepForm = () => {
       : Yup.string(),
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     // Handle form submission logic here
     console.log(values);
     setSubmitting(false);
+
+    if (step === 3) {
+      try {
+        // API call for registration
+        const response = await fetch('https://mock-api.arikmpt.com/api/user/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+          console.error('Registration failed:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error during registration:', error);
+      }
+    }
+
+    if (step === 4) {
+      try {
+        // API call for login
+        const response = await fetch('https://mock-api.arikmpt.com/api/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+          console.error('Login failed:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
+      }
+    }
 
     // Increment the step after successful submission
     nextStep();
@@ -71,7 +109,7 @@ const MultiStepForm = () => {
     window.scrollTo(0, 0);
   }, [step]);
 
-  return ( 
+  return (
     <Formik
       initialValues={{
         fullName: '',
@@ -216,9 +254,74 @@ const MultiStepForm = () => {
                 <button
                   type="submit"
                   disabled={!formikProps.isValid}
+                  onClick={() => handleSubmit(formikProps.values, formikProps)}
+                  className="bg-blue-500 hover.bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Register
+                </button>
+              </div>
+            </>
+          )}
+
+          {step === 4 && (
+            <>
+              <h2 className="text-2xl font-semibold mb-4">Step 4: Login Information</h2>
+              <div className="mb-4">
+                <label htmlFor="username" className="block text-sm font-medium text-gray-600">
+                  Username
+                </label>
+                <Field type="text" id="username" name="username" className="input-field" />
+                <ErrorMessage name="username" component="div" className="text-red-500 text-sm" />
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+                  Password
+                </label>
+                <Field type="password" id="password" name="password" className="input-field" />
+                <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+              </div>
+
+              <div className="flex justify-between mt-8">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Previous
+                </button>
+                <button
+                  type="submit"
+                  disabled={!formikProps.isValid}
+                  onClick={() => handleSubmit(formikProps.values, formikProps)}
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >
-                  Submit
+                  Login
+                </button>
+              </div>
+            </>
+          )}
+
+          {step === 5 && (
+            <>
+              <h2 className="text-2xl font-semibold mb-4">Step 5: User Information</h2>
+              {/* Display, edit, and save user information using the mock API */}
+              {/* Add your code here */}
+              <div className="flex justify-between mt-8">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Previous
+                </button>
+                <button
+                  type="submit"
+                  disabled={!formikProps.isValid}
+                  onClick={() => handleSubmit(formikProps.values, formikProps)}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Save
                 </button>
               </div>
             </>
