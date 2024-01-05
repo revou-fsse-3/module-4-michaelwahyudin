@@ -4,6 +4,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './styles.css'; // Import your Tailwind CSS file
 
+const TOKEN_KEY = 'revou-w10-token';
+
 const MultiStepForm = () => {
   const [step, setStep] = useState(1);
 
@@ -54,58 +56,78 @@ const MultiStepForm = () => {
     password: step === 3
       ? Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
       : Yup.string(),
+
+      registrationCode: step === 3
+      ? Yup.string().required('Registration Code is required')
+      : Yup.string(),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    // Handle form submission logic here
     console.log(values);
     setSubmitting(false);
 
+    
     if (step === 3) {
       try {
-        // API call for registration using JSONPlaceholder
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+        const registerUrl = 'https://mock-api.arikmpt.com/api/user/register';
+
+        const response = await fetch(registerUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify({
+            name: values.fullName,
+            email: values.email,
+            dob: values.dob,
+            registrationCode: values.registrationCode,
+          }),
         });
-    
+
         if (!response.ok) {
           console.error('Registration failed:', response.statusText);
+        } else {
+          console.log('Registration successful!');
         }
       } catch (error) {
         console.error('Error during registration:', error);
       }
     }
-    
+
     if (step === 4) {
       try {
         // API call for login using JSONPlaceholder
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+        const response = await fetch('https://mock-api.arikmpt.com/api/user/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(values),
         });
-    
+
         if (!response.ok) {
           console.error('Login failed:', response.statusText);
+        } else {
+          // Assuming your API returns a token upon successful login
+          const token = 'revou-w10-token'; // Replace with the actual token received
+
+          // Store the token using localStorage
+          localStorage.setItem(TOKEN_KEY, token);
+
+          console.log('Login successful!');
         }
       } catch (error) {
         console.error('Error during login:', error);
       }
     }
-    
+
     if (step === 5) {
       try {
         // Fetch user profile using JSONPlaceholder
-        const profileResponse = await fetch('https://jsonplaceholder.typicode.com/users/1', {
+        const profileResponse = await fetch('https://mock-api.arikmpt.com/api/category', {
           method: 'GET',
         });
-    
+
         if (!profileResponse.ok) {
           console.error('Fetching user profile failed:', profileResponse.statusText);
         } else {
@@ -116,10 +138,10 @@ const MultiStepForm = () => {
         console.error('Error fetching user profile:', error);
       }
     }
-    
 
     nextStep();
   };
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
