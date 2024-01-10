@@ -1,7 +1,7 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/VXLqjAFn)
 
-This is my React project for revou
-I have uploaded it into my [netlify](https://michawrevu.netlify.app/)
+This is my week 10 React project for revou
+I have uploaded it into my [Vercel](https://module-4-michaelwahyudin.vercel.app/login)
 In the project directory(use npm start on 'my-app' folder), you can run:
 
 ### `npm start`
@@ -11,21 +11,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 below is the video demo of my project 
 https://drive.google.com/file/d/10KYswcAQArMnu7uLY0uM9HifSbCJrX34/view?usp=sharing
-
-
-
-
-# REQUIREMENTS
-
-- using useState
-- form validation using (yup/zod)
-- responsive web using Tailwind CSS
-- multi-step form using (Formik/react-hook-form)
-
-- using useEffect, custom hooks, and useContext correctly
-- routing (register, login, home (list category), edit, new) using react-router
-- CRUD (create, read, update, delete) category
-
 
 
 
