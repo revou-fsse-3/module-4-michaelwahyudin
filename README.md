@@ -3,6 +3,14 @@
 This is my week 10 React project for revou
 I have uploaded it into my [Vercel](https://module-4-michaelwahyudin.vercel.app/)
 In the project directory(use npm start on 'my-app' folder), you can run:
+**credit to mas pojan 
+
+
+week 9 project is in other branch called week 9 
+
+
+
+
 
 ### `npm start`
 
