@@ -1,6 +1,20 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/VXLqjAFn)
 
+
+
+
 This is my week 10 React project for revou
+I have uploaded it into my [Vercel](https://module-4-michaelwahyudin-okdb.vercel.app/)
+
+
+
+
+
+
+
+
+
+This is my week 10 React backup project for revou in case the main one does not work  
 I have uploaded it into my [Vercel](https://module-4-michaelwahyudin.vercel.app/)
 In the project directory(use npm start on 'my-app' folder), you can run:
 **credit to mas pojan 
