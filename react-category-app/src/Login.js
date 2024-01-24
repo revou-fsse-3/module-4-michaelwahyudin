@@ -11,6 +11,10 @@ const Login = () => {
   const [loginMessage, setLoginMessage] = useState(null);
   const navigate = useNavigate();
 
+  const storeTokenInLocalStorage = (token) => {
+    localStorage.setItem(TOKEN_KEY, token);
+  };
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -26,7 +30,7 @@ const Login = () => {
         const token = response.data.token;
 
         // Store token in local storage
-        localStorage.setItem(TOKEN_KEY, token);
+        storeTokenInLocalStorage(token);
 
         // Handle successful login
         setLoginMessage('Login successful!');
@@ -45,11 +49,7 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={formik.handleSubmit}>
         <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="text"
-          {...formik.getFieldProps('email')}
-        />
+        <input id="email" type="text" {...formik.getFieldProps('email')} />
         {formik.touched.email && formik.errors.email ? (
           <div>{formik.errors.email}</div>
         ) : null}

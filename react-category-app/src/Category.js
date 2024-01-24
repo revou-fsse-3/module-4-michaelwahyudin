@@ -39,11 +39,8 @@ const Category = () => {
         }
 
         // Fetch updated category list
-        const response = await axios.get(CATEGORY_API_URL, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setCategories(response.data);
-
+        await fetchData();
+        
         // Reset form
         formik.resetForm();
         setEditingCategory(null);
@@ -52,6 +49,19 @@ const Category = () => {
       }
     },
   });
+
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem(TOKEN_KEY);
+
+      const response = await axios.get(CATEGORY_API_URL, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCategories(response.data);
+    } catch (error) {
+      // Handle category fetch error
+    }
+  };
 
   const handleEditCategory = (category) => {
     setEditingCategory(category);
@@ -67,10 +77,7 @@ const Category = () => {
       });
 
       // Fetch updated category list
-      const response = await axios.get(CATEGORY_API_URL, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setCategories(response.data);
+      await fetchData();
 
       // Reset form
       formik.resetForm();
@@ -81,19 +88,6 @@ const Category = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem(TOKEN_KEY);
-  
-        const response = await axios.get(CATEGORY_API_URL, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setCategories(response.data);
-      } catch (error) {
-        console.error('Category fetch error:', error);
-      }
-    };
-  
     fetchData();
   }, []);
 
@@ -120,12 +114,8 @@ const Category = () => {
         {categories.map((category) => (
           <li key={category.id}>
             {category.name}
-            <button onClick={() => handleEditCategory(category)}>
-              Edit
-            </button>
-            <button onClick={() => handleDeleteCategory(category.id)}>
-              Delete
-            </button>
+            <button onClick={() => handleEditCategory(category)}>Edit</button>
+            <button onClick={() => handleDeleteCategory(category.id)}>Delete</button>
           </li>
         ))}
       </ul>
