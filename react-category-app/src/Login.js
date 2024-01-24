@@ -23,9 +23,14 @@ const Login = () => {
     onSubmit: async (values) => {
       try {
         const response = await axios.post(LOGIN_API_URL, values);
-        localStorage.setItem(TOKEN_KEY, response.data.token);
+        const token = response.data.token;
+
+        // Store token in local storage
+        localStorage.setItem(TOKEN_KEY, token);
+
         // Handle successful login
         setLoginMessage('Login successful!');
+
         // Redirect to Category page after successful login
         navigate('/category');
       } catch (error) {

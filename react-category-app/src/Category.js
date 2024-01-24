@@ -10,38 +10,37 @@ import { Link } from 'react-router-dom';
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [editingCategory, setEditingCategory] = useState(null);
-  const [categoryMessage, setCategoryMessage] = useState(null);
 
   const formik = useFormik({
     initialValues: {
       categoryName: '',
     },
     validationSchema: Yup.object({
-      categoryName: Yup.string().required('Category Name is required'),
+      categoryName: Yup.string().required('Required'),
     }),
     onSubmit: async (values) => {
       try {
+        const token = localStorage.getItem(TOKEN_KEY);
+
         if (editingCategory) {
           // Update category
           await axios.put(
             `${CATEGORY_API_URL}/${editingCategory.id}`,
             values,
             {
-              headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
+              headers: { Authorization: `Bearer ${token}` },
             }
           );
-          setCategoryMessage('Category updated successfully!');
         } else {
           // Add new category
           await axios.post(CATEGORY_API_URL, values, {
-            headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
+            headers: { Authorization: `Bearer ${token}` },
           });
-          setCategoryMessage('Category added successfully!');
         }
 
         // Fetch updated category list
         const response = await axios.get(CATEGORY_API_URL, {
-          headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setCategories(response.data);
 
@@ -50,7 +49,6 @@ const Category = () => {
         setEditingCategory(null);
       } catch (error) {
         // Handle category creation/update error
-        setCategoryMessage('Error creating/updating category');
       }
     },
   });
@@ -58,43 +56,44 @@ const Category = () => {
   const handleEditCategory = (category) => {
     setEditingCategory(category);
     formik.setValues({ categoryName: category.name });
-    setCategoryMessage(null);
   };
 
   const handleDeleteCategory = async (categoryId) => {
     try {
+      const token = localStorage.getItem(TOKEN_KEY);
+
       await axios.delete(`${CATEGORY_API_URL}/${categoryId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       // Fetch updated category list
       const response = await axios.get(CATEGORY_API_URL, {
-        headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setCategories(response.data);
 
       // Reset form
       formik.resetForm();
       setEditingCategory(null);
-      setCategoryMessage('Category deleted successfully!');
     } catch (error) {
       // Handle category deletion error
-      setCategoryMessage('Error deleting category');
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem(TOKEN_KEY);
+  
         const response = await axios.get(CATEGORY_API_URL, {
-          headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setCategories(response.data);
       } catch (error) {
-        // Handle category fetch error
+        console.error('Category fetch error:', error);
       }
     };
-
+  
     fetchData();
   }, []);
 
@@ -116,8 +115,6 @@ const Category = () => {
           {editingCategory ? 'Update Category' : 'Add Category'}
         </button>
       </form>
-
-      {categoryMessage && <div>{categoryMessage}</div>}
 
       <ul>
         {categories.map((category) => (
