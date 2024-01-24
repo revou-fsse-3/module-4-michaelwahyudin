@@ -1,20 +1,23 @@
 // src/Login.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { LOGIN_API_URL, TOKEN_KEY } from './constants';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const [loginMessage, setLoginMessage] = useState(null);
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
-      email: '', // Change from 'username' to 'email'
+      email: '',
       password: '',
     },
     validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email address').required('Required'), // Validate email
+      email: Yup.string().email('Invalid email address').required('Required'),
       password: Yup.string().required('Required'),
     }),
     onSubmit: async (values) => {
@@ -22,8 +25,12 @@ const Login = () => {
         const response = await axios.post(LOGIN_API_URL, values);
         localStorage.setItem(TOKEN_KEY, response.data.token);
         // Handle successful login
+        setLoginMessage('Login successful!');
+        // Redirect to Category page after successful login
+        navigate('/category');
       } catch (error) {
         // Handle login error
+        setLoginMessage('Login failed. Please check your email and password.');
       }
     },
   });
@@ -32,10 +39,10 @@ const Login = () => {
     <div>
       <h2>Login</h2>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="email">Email</label> {/* Change from 'username' to 'email' */}
+        <label htmlFor="email">Email</label>
         <input
-          id="email" // Change from 'username' to 'email'
-          type="text" // You can change to 'email' if you prefer
+          id="email"
+          type="text"
           {...formik.getFieldProps('email')}
         />
         {formik.touched.email && formik.errors.email ? (
@@ -54,6 +61,9 @@ const Login = () => {
 
         <button type="submit">Login</button>
       </form>
+
+      {loginMessage && <div>{loginMessage}</div>}
+
       <p>
         Don't have an account? <Link to="/register">Register</Link>
       </p>

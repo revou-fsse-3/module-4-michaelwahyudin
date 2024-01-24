@@ -10,13 +10,14 @@ import { Link } from 'react-router-dom';
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [editingCategory, setEditingCategory] = useState(null);
+  const [categoryMessage, setCategoryMessage] = useState(null);
 
   const formik = useFormik({
     initialValues: {
       categoryName: '',
     },
     validationSchema: Yup.object({
-      categoryName: Yup.string().required('Required'),
+      categoryName: Yup.string().required('Category Name is required'),
     }),
     onSubmit: async (values) => {
       try {
@@ -29,11 +30,13 @@ const Category = () => {
               headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
             }
           );
+          setCategoryMessage('Category updated successfully!');
         } else {
           // Add new category
           await axios.post(CATEGORY_API_URL, values, {
             headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
           });
+          setCategoryMessage('Category added successfully!');
         }
 
         // Fetch updated category list
@@ -47,6 +50,7 @@ const Category = () => {
         setEditingCategory(null);
       } catch (error) {
         // Handle category creation/update error
+        setCategoryMessage('Error creating/updating category');
       }
     },
   });
@@ -54,6 +58,7 @@ const Category = () => {
   const handleEditCategory = (category) => {
     setEditingCategory(category);
     formik.setValues({ categoryName: category.name });
+    setCategoryMessage(null);
   };
 
   const handleDeleteCategory = async (categoryId) => {
@@ -71,8 +76,10 @@ const Category = () => {
       // Reset form
       formik.resetForm();
       setEditingCategory(null);
+      setCategoryMessage('Category deleted successfully!');
     } catch (error) {
       // Handle category deletion error
+      setCategoryMessage('Error deleting category');
     }
   };
 
@@ -109,6 +116,8 @@ const Category = () => {
           {editingCategory ? 'Update Category' : 'Add Category'}
         </button>
       </form>
+
+      {categoryMessage && <div>{categoryMessage}</div>}
 
       <ul>
         {categories.map((category) => (
