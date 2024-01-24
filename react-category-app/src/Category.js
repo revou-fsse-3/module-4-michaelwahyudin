@@ -22,6 +22,14 @@ const Category = () => {
       try {
         const token = localStorage.getItem(TOKEN_KEY);
 
+        if (!token) {
+          // Handle the case where the token is not available
+          console.error('Token not available. Please log in.');
+          return;
+        }
+
+        console.log('Token:', token);
+
         if (editingCategory) {
           // Update category
           await axios.put(
@@ -54,21 +62,32 @@ const Category = () => {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem(TOKEN_KEY);
-
+  
+      if (!token) {
+        // Handle the case where the token is not available
+        console.error('Token not available. Please log in.');
+        return;
+      }
+  
       const response = await axios.get(CATEGORY_API_URL, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
       // Log the response to the console
-      console.log('API response:', response.data);
-
-      setCategories(response.data);
+      console.log('API response:', response);
+  
+      // Check if the response data is an object with a 'data' property
+      if (response.data && typeof response.data === 'object' && response.data.data) {
+        setCategories(response.data.data);
+      } else {
+        // If the response structure is unexpected, log an error
+        console.error('Unexpected API response structure:', response);
+      }
     } catch (error) {
       // Handle category fetch error
       console.error('API error:', error);
     }
   };
-
 
   const handleEditCategory = (category) => {
     setEditingCategory(category);
@@ -78,7 +97,13 @@ const Category = () => {
   const handleDeleteCategory = async (categoryId) => {
     try {
       const token = localStorage.getItem(TOKEN_KEY);
-  
+
+      if (!token) {
+        // Handle the case where the token is not available
+        console.error('Token not available. Please log in.');
+        return;
+      }
+
       await axios.delete(`${CATEGORY_API_URL}/${categoryId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });

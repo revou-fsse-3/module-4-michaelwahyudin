@@ -26,19 +26,22 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       try {
+        // Send a POST request to LOGIN_API_URL with the provided values
         const response = await axios.post(LOGIN_API_URL, values);
-        const token = response.data.token;
 
-        // Store token in local storage
+        // Extract the token from the updated response structure
+        const token = response.data.data.token;
+
+        // Store the token in local storage
         storeTokenInLocalStorage(token);
 
-        // Handle successful login
+        // Set a login success message
         setLoginMessage('Login successful!');
 
-        // Redirect to Category page after successful login
+        // Navigate to the '/category' route
         navigate('/category');
       } catch (error) {
-        // Handle login error
+        // If an error occurs (e.g., invalid credentials), set a login failure message
         setLoginMessage('Login failed. Please check your email and password.');
       }
     },
