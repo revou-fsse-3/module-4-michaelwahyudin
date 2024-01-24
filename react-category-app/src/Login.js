@@ -7,13 +7,13 @@ import axios from 'axios';
 import { LOGIN_API_URL, TOKEN_KEY } from './constants';
 import { Link, useNavigate } from 'react-router-dom';
 
+const storeTokenInLocalStorage = (token) => {
+  localStorage.setItem(TOKEN_KEY, token);
+};
+
 const Login = () => {
   const [loginMessage, setLoginMessage] = useState(null);
   const navigate = useNavigate();
-
-  const storeTokenInLocalStorage = (token) => {
-    localStorage.setItem(TOKEN_KEY, token);
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -55,11 +55,7 @@ const Login = () => {
         ) : null}
 
         <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          {...formik.getFieldProps('password')}
-        />
+        <input id="password" type="password" {...formik.getFieldProps('password')} />
         {formik.touched.password && formik.errors.password ? (
           <div>{formik.errors.password}</div>
         ) : null}

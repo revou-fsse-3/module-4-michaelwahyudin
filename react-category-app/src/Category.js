@@ -40,12 +40,13 @@ const Category = () => {
 
         // Fetch updated category list
         await fetchData();
-        
+
         // Reset form
         formik.resetForm();
         setEditingCategory(null);
       } catch (error) {
         // Handle category creation/update error
+        console.error('API error:', error);
       }
     },
   });
@@ -57,11 +58,17 @@ const Category = () => {
       const response = await axios.get(CATEGORY_API_URL, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
+      // Log the response to the console
+      console.log('API response:', response.data);
+
       setCategories(response.data);
     } catch (error) {
       // Handle category fetch error
+      console.error('API error:', error);
     }
   };
+
 
   const handleEditCategory = (category) => {
     setEditingCategory(category);
@@ -71,7 +78,7 @@ const Category = () => {
   const handleDeleteCategory = async (categoryId) => {
     try {
       const token = localStorage.getItem(TOKEN_KEY);
-
+  
       await axios.delete(`${CATEGORY_API_URL}/${categoryId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -84,6 +91,7 @@ const Category = () => {
       setEditingCategory(null);
     } catch (error) {
       // Handle category deletion error
+      console.error('API error:', error);
     }
   };
 
@@ -115,12 +123,14 @@ const Category = () => {
           <li key={category.id}>
             {category.name}
             <button onClick={() => handleEditCategory(category)}>Edit</button>
-            <button onClick={() => handleDeleteCategory(category.id)}>Delete</button>
+            <button onClick={() => handleDeleteCategory(category.id)}>
+              Delete
+            </button>
           </li>
         ))}
       </ul>
       <p>
-        <Link to="/">Home</Link> {/* Link to home page */}
+        <Link to="/">Home</Link> {/* Link to the home page */}
       </p>
     </div>
   );
