@@ -95,24 +95,25 @@ const Category = () => {
   const handleDeleteCategory = async (categoryId) => {
     try {
       const token = localStorage.getItem(TOKEN_KEY);
-
+  
       if (!token) {
         console.error('Token not available. Please log in.');
         return;
       }
-
-      await axios.delete(`${UPDATE_API}/${categoryId}`, {
+  
+      await axios.delete(`${CATEGORY_API_URL}/${categoryId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
       await fetchData();
-
+  
       formik.resetForm();
       setEditingCategory(null);
     } catch (error) {
       console.error('API error:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchData();
