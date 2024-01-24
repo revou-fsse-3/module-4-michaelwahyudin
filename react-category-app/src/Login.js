@@ -10,11 +10,11 @@ import { Link } from 'react-router-dom';
 const Login = () => {
   const formik = useFormik({
     initialValues: {
-      username: '',
+      email: '', // Change from 'username' to 'email'
       password: '',
     },
     validationSchema: Yup.object({
-      username: Yup.string().required('Required'),
+      email: Yup.string().email('Invalid email address').required('Required'), // Validate email
       password: Yup.string().required('Required'),
     }),
     onSubmit: async (values) => {
@@ -32,14 +32,14 @@ const Login = () => {
     <div>
       <h2>Login</h2>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label> {/* Change from 'username' to 'email' */}
         <input
-          id="username"
-          type="text"
-          {...formik.getFieldProps('username')}
+          id="email" // Change from 'username' to 'email'
+          type="text" // You can change to 'email' if you prefer
+          {...formik.getFieldProps('email')}
         />
-        {formik.touched.username && formik.errors.username ? (
-          <div>{formik.errors.username}</div>
+        {formik.touched.email && formik.errors.email ? (
+          <div>{formik.errors.email}</div>
         ) : null}
 
         <label htmlFor="password">Password</label>
